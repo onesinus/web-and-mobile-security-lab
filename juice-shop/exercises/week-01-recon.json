@@ -1,0 +1,23 @@
+{
+  "title": "Juice Shop Reconnaissance",
+  "challenges": [
+    {
+      "name": "Find the Score Board",
+      "description": "Find the hidden score board page",
+      "hint": "Check common paths in robots.txt",
+      "points": 10
+    },
+    {
+      "name": "DOM XSS",
+      "description": "Perform a DOM-based XSS attack",
+      "hint": "Try the search functionality",
+      "points": 30
+    },
+    {
+      "name": "API Discovery",
+      "description": "Discover all API endpoints",
+      "hint": "Use browser dev tools Network tab",
+      "points": 20
+    }
+  ]
+}

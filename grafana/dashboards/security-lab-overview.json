@@ -1,0 +1,46 @@
+{
+  "title": "Security Lab Overview",
+  "version": 1,
+  "panels": [
+    {
+      "title": "API Requests Over Time",
+      "type": "graph",
+      "datasource": "Loki",
+      "targets": [
+        {
+          "expr": "sum(rate({job=\"docker\"} |= \"GET\" [5m]))"
+        }
+      ]
+    },
+    {
+      "title": "HTTP Status Codes",
+      "type": "graph",
+      "datasource": "Loki",
+      "targets": [
+        {
+          "expr": "sum(rate({job=\"docker\"} | regexp \"(\\\\d{3})\" [5m])) by (status)"
+        }
+      ]
+    },
+    {
+      "title": "Error Rate",
+      "type": "stat",
+      "datasource": "Loki",
+      "targets": [
+        {
+          "expr": "sum(rate({job=\"docker\"} |= \"4\\\\d{2}\" [5m]))"
+        }
+      ]
+    },
+    {
+      "title": "ZAP Findings",
+      "type": "table",
+      "datasource": "Loki",
+      "targets": [
+        {
+          "expr": "{job=\"docker\"} |= \"Alert\""
+        }
+      ]
+    }
+  ]
+}

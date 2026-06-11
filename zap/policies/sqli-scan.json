@@ -1,0 +1,13 @@
+{
+  "name": "SQL Injection Scan Policy",
+  "description": "Focused scan for SQL injection vulnerabilities",
+  "threshold": "Low",
+  "attackStrength": "Insane",
+  "scanners": [
+    { "id": 40018, "name": "SQL Injection", "enabled": true },
+    { "id": 40019, "name": "SQL Injection (Hypersonic)", "enabled": true },
+    { "id": 40020, "name": "SQL Injection (MySQL)", "enabled": true },
+    { "id": 40021, "name": "SQL Injection (PostgreSQL)", "enabled": true },
+    { "id": 40022, "name": "SQL Injection (MsSQL)", "enabled": true }
+  ]
+}

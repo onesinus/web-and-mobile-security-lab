@@ -1,0 +1,12 @@
+{
+  "name": "XSS Scan Policy",
+  "description": "Focused scan for Cross-Site Scripting vulnerabilities",
+  "threshold": "Low",
+  "attackStrength": "Insane",
+  "scanners": [
+    { "id": 40012, "name": "Cross Site Scripting (Reflected)", "enabled": true },
+    { "id": 40014, "name": "Cross Site Scripting (Persistent)", "enabled": true },
+    { "id": 40016, "name": "Cross Site Scripting (DOM)", "enabled": true },
+    { "id": 40017, "name": "Cross Site Scripting (Stored)", "enabled": true }
+  ]
+}

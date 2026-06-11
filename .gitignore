@@ -1,0 +1,9 @@
+node_modules/
+npm-debug.log*
+.env
+*.log
+postgres_data/
+dist/
+.tmp/
+.DS_Store
+Thumbs.db

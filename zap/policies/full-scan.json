@@ -1,0 +1,26 @@
+{
+  "name": "Full Security Scan",
+  "description": "Complete OWASP Top 10 scan policy",
+  "threshold": "Low",
+  "attackStrength": "High",
+  "scanners": [
+    { "id": 40018, "name": "SQL Injection", "enabled": true },
+    { "id": 40012, "name": "Cross Site Scripting (Reflected)", "enabled": true },
+    { "id": 40014, "name": "Cross Site Scripting (Persistent)", "enabled": true },
+    { "id": 40016, "name": "Cross Site Scripting (DOM)", "enabled": true },
+    { "id": 40017, "name": "Cross Site Scripting (Stored)", "enabled": true },
+    { "id": 10104, "name": "Cross Site Request Forgery", "enabled": true },
+    { "id": 10021, "name": "X-Content-Type-Options Header", "enabled": true },
+    { "id": 10020, "name": "X-Frame-Options Header", "enabled": true },
+    { "id": 10023, "name": "Information Disclosure", "enabled": true },
+    { "id": 10024, "name": "Cookie without HttpOnly", "enabled": true },
+    { "id": 10025, "name": "Cookie without Secure", "enabled": true },
+    { "id": 10026, "name": "Cookie without SameSite", "enabled": true },
+    { "id": 10095, "name": "Backup File Disclosure", "enabled": true },
+    { "id": 10096, "name": "Directory Browsing", "enabled": true },
+    { "id": 10097, "name": "Server Side Request Forgery", "enabled": true },
+    { "id": 90019, "name": "Server Side Template Injection", "enabled": true },
+    { "id": 90020, "name": "Command Injection", "enabled": true },
+    { "id": 90022, "name": "Application Error Disclosure", "enabled": true }
+  ]
+}
