@@ -37,10 +37,20 @@ docker compose ps
 - What technologies are used (check response headers)?
 
 ### Exercise 2: Automated Scanning with ZAP
-1. Open ZAP: http://localhost:8090
-2. Configure ZAP to target http://juice-shop:3000 (or http://host.docker.internal:3000 on Windows)
-3. Run an automated scan
-4. Review the alerts
+
+ZAP runs in two modes — choose one:
+
+**Mode A — Daemon Proxy (uses browser proxy settings)**
+1. Set your browser proxy to `localhost:8090` (see [README](README.md#zap-usage-daemon-mode))
+2. Browse to http://localhost:3000 (Juice Shop) — ZAP intercepts traffic
+3. Use ZAP's API to trigger scanning: `curl --proxy http://localhost:8090 http://zap/JSON/ascan/action/scan/?url=http://juice-shop:3000&recurse=true`
+
+**Mode B — ZAP Desktop UI (via browser)**
+1. Start: `docker compose --profile zap-ui up -d zap-ui`
+2. Open http://localhost:5800 in your browser
+3. In ZAP, add target as `http://juice-shop:3000` (Docker service name, NOT localhost)
+4. Run an automated scan
+5. Review the alerts
 
 **Questions:**
 - What high-risk issues were found?

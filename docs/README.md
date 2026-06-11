@@ -15,6 +15,26 @@ A hands-on security lab environment for teaching web and mobile application secu
 | MobSF | Mobile security framework | http://localhost:8000 | - |
 | SonarQube | Code quality analysis | http://localhost:9000 | admin / admin |
 
+## Docker Networking (Important!)
+
+Inside a container, `localhost` refers to the container itself, **not** your host machine.
+
+| From your browser | From inside a container |
+|---|---|
+| `localhost:3000` → Juice Shop | `http://juice-shop:3000` |
+| `localhost:8080` → Vulnerable API | `http://vulnerable-api:8080` |
+| `localhost:5432` → PostgreSQL | `postgres:5432` |
+
+When using **ZAP Desktop inside Docker** (Option 5), use the **Docker service names** as targets:
+- `http://juice-shop:3000` (not localhost:3000)
+- `http://vulnerable-api:8080` (not localhost:8080)
+
+To access a service running on your **host machine** from a container, use:
+- **Windows/Mac**: `host.docker.internal`
+- **Linux**: `172.17.0.1` (or `--add-host host.docker.internal:host-gateway`)
+
+This applies to all tools inside containers (ZAP, Burp, scan scripts, etc.).
+
 ## ZAP Usage (Daemon Mode)
 
 ZAP runs as a **forward proxy**, not a web server. You cannot open it in a browser directly.
@@ -65,6 +85,13 @@ docker compose --profile zap-ui up -d zap-ui
 ```
 
 Then open http://localhost:5800 in your browser for a full ZAP Desktop GUI.
+
+**Important:** When adding targets in ZAP, use Docker service names, not `localhost`:
+
+| Target | URL in ZAP |
+|--------|-----------|
+| Juice Shop | `http://juice-shop:3000` |
+| Vulnerable API | `http://vulnerable-api:8080` |
 
 ZAP proxy also available at `localhost:8091` for API access.
 
