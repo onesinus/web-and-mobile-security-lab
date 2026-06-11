@@ -99,6 +99,24 @@ services:
       - dmz
 
   # --------------------------------------------------
+  # ZAP Desktop UI (VNC / Browser via noVNC)
+  # Requires profile: zap-ui or `--profile zap-ui`
+  # --------------------------------------------------
+  zap-ui:
+    build:
+      context: ./zap-ui
+    container_name: zap-ui
+    restart: unless-stopped
+    profiles:
+      - zap-ui
+    ports:
+      - "8091:8080"
+      - "5900:5900"
+      - "5800:6080"
+    networks:
+      - dmz
+
+  # --------------------------------------------------
   # Nginx Reverse Proxy
   # --------------------------------------------------
   nginx:

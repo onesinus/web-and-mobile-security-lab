@@ -56,7 +56,19 @@ zap = ZAPv2(proxies={'http': 'http://localhost:8090', 'https': 'http://localhost
 print(zap.core.version)
 ```
 
-### Option 5: ZAP Desktop (full UI)
+### Option 5: ZAP Desktop in Docker (browser-based UI)
+
+Start the optional ZAP Desktop container:
+
+```bash
+docker compose --profile zap-ui up -d zap-ui
+```
+
+Then open http://localhost:5800 in your browser for a full ZAP Desktop GUI.
+
+ZAP proxy also available at `localhost:8091` for API access.
+
+### Option 6: ZAP Desktop (native install)
 
 Install [ZAP Desktop](https://www.zaproxy.org/download/) on your host machine, then connect it to the daemon:
 **Tools → Options → API → Enable** and set the proxy to `localhost:8090`.
@@ -71,6 +83,11 @@ Services with profiles (mobile week, advanced labs):
 
 ```bash
 docker compose --profile mobile --profile advanced up -d
+```
+
+ZAP Desktop (browser-based GUI):
+```bash
+docker compose --profile zap-ui up -d zap-ui
 ```
 
 ## Course Outline
