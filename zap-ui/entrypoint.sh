@@ -1,11 +1,19 @@
 #!/bin/bash
-set -e
 
 Xvfb :99 -screen 0 1280x1024x24 &
 sleep 1
 
 x11vnc -display :99 -forever -nopw -rfbport 5900 &
-sleep 1
+sleep 2
+
+for i in $(seq 1 10); do
+    if ss -tlnp 2>/dev/null | grep -q :5900; then
+        echo "x11vnc is ready on port 5900"
+        break
+    fi
+    echo "Waiting for x11vnc (attempt $i)..."
+    sleep 1
+done
 
 mkdir -p /tmp/novnc
 cp -r /usr/share/novnc/* /tmp/novnc/ 2>/dev/null || true
