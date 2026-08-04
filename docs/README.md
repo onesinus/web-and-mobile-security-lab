@@ -143,6 +143,8 @@ docker compose --profile zap-ui up -d zap-ui
 
 # alternative
 if you have an issue with zap ui using novnc, then can execute this command
+```
 docker compose -f docker-compose.zap.ui.yml  up -d
+```
 
 then can access this url on your browser: http://localhost:9999/zap/
