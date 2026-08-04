@@ -1,0 +1,16 @@
+name: zap-ui-using-webswing
+services:
+  zap-ui-webswing:
+    image: ghcr.io/zaproxy/zaproxy:stable
+    container_name: zap_webswing
+    user: "zap"
+    command: zap-webswing.sh
+    tty: true
+    stdin_open: true
+    ports:
+      - "9999:8080"
+      - "8899:8090"
+networks:
+  external-dmz-network:
+    external: true
+    name: dmz

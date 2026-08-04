@@ -140,3 +140,9 @@ docker compose --profile zap-ui up -d zap-ui
 - [Python 3](https://www.python.org/downloads/) (for exploit scripts)
 - [Node.js](https://nodejs.org/) (optional, for custom scripts)
 - Web browser (Chrome/Firefox with dev tools)
+
+# alternative
+if you have an issue with zap ui using novnc, then can execute this command
+docker compose -f docker-compose.zap.ui.yml  up -d
+
+then can access this url on your browser: http://localhost:9999/zap/

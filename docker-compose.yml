@@ -71,7 +71,7 @@ services:
       DB_PASSWORD: student123
       JWT_SECRET: super-secret-jwt
     ports:
-      - "8080:8080"
+      - "8888:8080"
     networks:
       - dmz
       - internal
