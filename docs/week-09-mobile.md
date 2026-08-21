@@ -15,6 +15,10 @@ docker compose --profile mobile up -d mobsf
 
 Access MobSF at http://localhost:8000
 
+to log in can use default username and password:
+username: mobsf
+password: mobsf
+
 ## Exercises
 
 ### Exercise 1: Static Analysis with MobSF

@@ -205,10 +205,65 @@ services:
     networks:
       - dmz
 
+# --------------------------------------------------
+  # Moneta Bank (Final Assessment Target)
+  # Brand new vulnerable banking app - build once, no online answers
+  # --------------------------------------------------
+  moneta-bank:
+    build:
+      context: ./moneta-bank
+    container_name: moneta-bank
+    restart: unless-stopped
+    depends_on:
+      moneta-db:
+        condition: service_healthy
+    environment:
+      DB_HOST: moneta-db
+      DB_PORT: 5432
+      DB_NAME: monetadb
+      DB_USER: moneta
+      DB_PASSWORD: moneta_pass
+      JWT_SECRET: moneta-super-secret-2024
+      APP_VERSION: "1.0.0"
+    ports:
+      - "4000:8080"
+    networks:
+      - dmz
+      - internal
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  # --------------------------------------------------
+  # Moneta Bank PostgreSQL (separate DB, internal-only so SSRF has a target)
+  # --------------------------------------------------
+  moneta-db:
+    image: postgres:15-alpine
+    container_name: moneta-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: monetadb
+      POSTGRES_USER: moneta
+      POSTGRES_PASSWORD: moneta_pass
+    volumes:
+      - moneta_data:/var/lib/postgresql/data
+    networks:
+      - internal
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U moneta -d monetadb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   postgres_data:
   grafana_data:
   sonarqube_data:
+  moneta_data:
 
 networks:
   dmz:

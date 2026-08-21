@@ -1,0 +1,27 @@
+<html>
+<head>
+  <title>Moneta Bank - Login</title>
+  <style>
+    body { font-family: Georgia, serif; margin: 5% 10%; background: #fafafa; }
+    .box { max-width: 380px; margin: auto; background: white; padding: 30px; border: 1px solid #ddd; border-radius: 8px; }
+    input { width: 100%; padding: 8px; margin: 6px 0; box-sizing: border-box; }
+    button { width: 100%; padding: 10px; background: #1e3a5f; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    a { display: block; margin-top: 10px; text-align: center; color: #1e3a5f; }
+    h1 { font-size: 24px; color: #1e3a5f; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Moneta Bank</h1>
+    <p>Secure Online Banking</p>
+    <form method="POST" action="/auth/login">
+      <label>Username</label>
+      <input type="text" name="username" required />
+      <label>Password</label>
+      <input type="password" name="password" required />
+      <button type="submit">Sign In</button>
+    </form>
+    <a href="/auth/register">Open an account</a>
+  </div>
+</body>
+</html>

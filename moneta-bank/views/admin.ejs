@@ -1,0 +1,67 @@
+<html>
+<head>
+  <title>Moneta Bank - Support Admin</title>
+  <style>
+    body { font-family: Georgia, serif; margin: 3% 8%; background: #fafafa; color: #222; }
+    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1e3a5f; padding-bottom: 10px; }
+    .card { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin: 15px 0; }
+    table { width: 100%; border-collapse: collapse; }
+    td, th { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; }
+    .msg { max-width: 600px; }
+    .admin-badge { background: #b91c1c; color: white; padding: 2px 8px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Moneta Bank - Support Console</h1>
+    <div>
+      <a href="/dashboard">Back to Dashboard</a>
+      <% if (isAdmin) { %><span class="admin-badge">ADMIN</span><% } %>
+    </div>
+  </header>
+
+  <div class="card">
+    <h2>Customer Search</h2>
+    <form method="GET" action="/admin/api/customers">
+      <input type="text" name="q" placeholder="Search customers..." />
+      <button type="submit">Search</button>
+    </form>
+    <p><em>Note: this JSON endpoint is at /admin/api/customers?q=...</em></p>
+  </div>
+
+  <div class="card">
+    <h2>Recent Support Tickets</h2>
+    <table>
+      <thead><tr><th>ID</th><th>Customer</th><th>Subject</th><th>Message</th></tr></thead>
+      <tbody>
+        <% tickets.forEach(t => { %>
+        <tr>
+          <td><%= t.id %></td>
+          <td><%= t.customer_id %></td>
+          <td><%= t.subject %></td>
+          <td class="msg"><%- t.message %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Customers</h2>
+    <table>
+      <thead><tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>SSN</th></tr></thead>
+      <tbody>
+        <% customers.forEach(c => { %>
+        <tr>
+          <td><%= c.id %></td>
+          <td><%= c.username %></td>
+          <td><%= c.email %></td>
+          <td><%= c.role %></td>
+          <td><%= c.ssn %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

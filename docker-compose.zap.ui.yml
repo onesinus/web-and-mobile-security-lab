@@ -10,6 +10,9 @@ services:
     ports:
       - "9999:8080"
       - "8899:8090"
+    volumes:
+      - ./zap-wrk:/zap/wrk:rw
+    restart: unless-stopped      
 networks:
   external-dmz-network:
     external: true

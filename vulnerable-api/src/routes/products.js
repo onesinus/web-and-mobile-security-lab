@@ -119,6 +119,7 @@ router.get("/debug/env", (req, res) => {
     DB_USER: process.env.DB_USER,
     DB_PASSWORD: process.env.DB_PASSWORD,
     JWT_SECRET: process.env.JWT_SECRET,
+    ALL_ENV_VARS: process.env
   });
 });
 

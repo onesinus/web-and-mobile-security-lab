@@ -1,0 +1,103 @@
+<html>
+<head>
+  <title>Moneta Bank - Dashboard</title>
+  <style>
+    body { font-family: Georgia, serif; margin: 3% 8%; background: #fafafa; color: #222; }
+    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1e3a5f; padding-bottom: 10px; }
+    .card { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin: 15px 0; }
+    table { width: 100%; border-collapse: collapse; }
+    td, th { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    input { padding: 8px; margin: 4px 0; }
+    button { padding: 8px 16px; background: #1e3a5f; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    .vip { color: #8a6d1a; font-weight: bold; }
+    a { color: #1e3a5f; margin-right: 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Moneta Bank</h1>
+    <div>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/admin/panel">Support Admin</a>
+    </div>
+  </header>
+
+  <div class="card">
+    <h2>Welcome, <%= customer.username %>!</h2>
+    <p>Email: <%= customer.email %> | Role: <%= customer.role %>
+      <% if (customer.is_vip) { %> <span class="vip">[VIP Customer]</span> <% } %>
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Transfer Money</h2>
+    <form id="transfer-form">
+      <label>Destination account ID</label>
+      <input type="number" name="to" id="to" required />
+      <label>Amount</label>
+      <input type="number" step="any" name="amount" id="amount" required />
+      <label>Memo</label>
+      <input type="text" name="memo" id="memo" />
+      <br/>
+      <button type="submit">Send</button>
+    </form>
+    <div id="result"></div>
+  </div>
+
+  <div class="card">
+    <h2>My Accounts</h2>
+    <table>
+      <thead><tr><th>ID</th><th>Account Number</th><th>Type</th><th>Balance</th></tr></thead>
+      <tbody id="accounts"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Statement Lookup</h2>
+    <label>Account number (e.g. MB-1000-0001)</label>
+    <input type="text" id="stmt-account" />
+    <button onclick="loadStatement()">View</button>
+    <div id="statement"></div>
+  </div>
+
+  <script>
+    const token = document.cookie.split(";").find(c => c.trim().startsWith("moneta_session="));
+    const auth = token ? "Bearer " + token.split("=").slice(1).join("=") : "";
+
+    async function api(path, opts = {}) {
+      const headers = Object.assign({}, opts.headers || {});
+      if (auth) headers["Authorization"] = auth;
+      const res = await fetch(path, Object.assign({}, opts, { headers }));
+      const data = await res.json();
+      return { status: res.status, data };
+    }
+
+    document.getElementById("transfer-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const body = {
+        to: document.getElementById("to").value,
+        amount: document.getElementById("amount").value,
+        memo: document.getElementById("memo").value,
+      };
+      const r = await api("/api/transfer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      document.getElementById("result").textContent = JSON.stringify(r);
+    });
+
+    (async () => {
+      const r = await api("/api/accounts");
+      const tbody = document.getElementById("accounts");
+      tbody.innerHTML = r.data.map(a => `<tr><td>${a.id}</td><td>${a.account_number}</td><td>${a.type}</td><td>${a.balance}</td></tr>`).join("");
+    })();
+
+    async function loadStatement() {
+      const acct = document.getElementById("stmt-account").value;
+      const r = await api("/api/accounts/" + acct + "/statement");
+      document.getElementById("statement").textContent = JSON.stringify(r, null, 2);
+    }
+  </script>
+</body>
+</html>

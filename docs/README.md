@@ -8,7 +8,9 @@ A hands-on security lab environment for teaching web and mobile application secu
 |---------|---------|-----|-------------|
 | Juice Shop | OWASP vulnerable web app (learning) | http://localhost:3000 | - |
 | Vulnerable API | Custom vulnerable REST API | http://localhost:8080 | See week 05 |
+| Moneta Bank | **Final assessment target** (brand-new vulnerable banking app) | http://localhost:4000 | See `final-moneta-sessions.md` |
 | PostgreSQL | Database backend | localhost:5432 | student / student123 |
+| Moneta Bank DB | Internal-only DB (SSRF target) | localhost:5433 | moneta / moneta_pass |
 | OWASP ZAP | Automated security scanner (proxy) | localhost:8090 (proxy) | See below |
 | Grafana | Monitoring dashboards | http://localhost:3001 | admin / admin |
 | Loki | Log aggregation | http://localhost:3100 | - |
