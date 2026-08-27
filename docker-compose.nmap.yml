@@ -1,0 +1,9 @@
+services:
+  webmap:
+    image: reborntc/webmap:latest
+    container_name: webmap
+    restart: unless-stopped
+    ports:
+      - "9696:8000"
+    volumes:
+      - ./webmap_data:/opt/xml
